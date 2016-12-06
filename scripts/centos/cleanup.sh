@@ -1,10 +1,7 @@
 #!/bin/sh -eux
 
 # should output one of 'redhat' 'centos' 'oraclelinux'
-distro="`rpm -qf --queryformat '%{NAME}' /etc/redhat-release | cut -f 1 -d '-'`" 
-
-# Remove development and kernel source packages
-yum -y remove gcc cpp kernel-devel kernel-headers;
+distro="`rpm -qf --queryformat '%{NAME}' /etc/redhat-release | cut -f 1 -d '-'`"
 
 if [ "$distro" != 'redhat' ]; then
   yum -y clean all;
@@ -55,4 +52,6 @@ _EOF_
   chmod +x /etc/rc.d/rc.local
 fi
 
+rm -rf /tmp/*
+history -c
 rm -f VBoxGuestAdditions_*.iso VBoxGuestAdditions_*.iso.?;
